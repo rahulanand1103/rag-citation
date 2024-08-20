@@ -1,0 +1,4 @@
+**/__pycache__/
+/build
+/dist
+/rag_citation.egg-info

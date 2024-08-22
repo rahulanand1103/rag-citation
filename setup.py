@@ -16,7 +16,3 @@ setup(
     python_requires=">=3.8",
     include_package_data=True,
 )
-
-
-# python setup.py sdist bdist_wheel
-# pip install dist/rag_citation-0.0.1-py3-none-any.whl --force-reinstall

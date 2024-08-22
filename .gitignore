@@ -3,3 +3,5 @@
 /dist
 /rag_citation.egg-info
 /docs/examples/.env
+docs/examples/db/
+.DS_Store

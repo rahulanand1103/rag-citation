@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-RAG Citation is an project that combines Retrieval-Augmented Generation (RAG) with automatic citation generation. This tool is designed to enhance the credibility of AI-generated content by providing relevant citations for the information used in generating responses.
+RAG Citation is an project that combines Retrieval-Augmented Generation (RAG) with automatic citation generation. This tool is designed to enhance the credibility of RAG-generated content by providing relevant citations for the information used in generating responses.
+
 
 ## Key Features
 

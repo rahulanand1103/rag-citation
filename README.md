@@ -1,4 +1,4 @@
-# RAG Citation: Enhancing AI-Generated Content with Automatic Citations (A Non-LLM Approach)
+# RAG Citation: Enhancing Rag Pipeline with Automatic Citations (A Non-LLM Approach)
 
 ## Project Overview
 

@@ -11,3 +11,6 @@ install:
 
 clean:  ## Clean up build artifacts.
 	@rm -rf dist/ build/ *.egg-info
+
+upload:  ## Clean up build artifacts.
+	@twine upload dist/*

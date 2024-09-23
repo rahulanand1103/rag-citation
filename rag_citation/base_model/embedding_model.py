@@ -1,7 +1,8 @@
 from sentence_transformers import SentenceTransformer
+from rag_citation.base_model.base import BaseEmbeddingModel
 
 
-class EmbedddingBaseModel:
+class EmbedddingBaseModel(BaseEmbeddingModel):
     """
     Base class for embedding models.
 
@@ -18,32 +19,29 @@ class EmbedddingBaseModel:
     default model: `sm`
     """
 
-    _model = None
-
     def __init__(self, embedding_model="sm"):
+        if embedding_model == "sm":
+            self.model = SentenceTransformer(
+                "avsolatorio/GIST-small-Embedding-v0", revision=None
+            )
 
-        if EmbedddingBaseModel._model is None:
+        elif embedding_model == "md":
+            self.model = SentenceTransformer(
+                "avsolatorio/GIST-Embedding-v0", revision=None
+            )
 
-            if embedding_model == "sm":
-                EmbedddingBaseModel._model = SentenceTransformer(
-                    "avsolatorio/GIST-small-Embedding-v0", revision=None
-                )
+        elif embedding_model == "lg":
+            self.model = SentenceTransformer(
+                "avsolatorio/GIST-large-Embedding-v0", revision=None
+            )
 
-            elif embedding_model == "md":
-                EmbedddingBaseModel._model = SentenceTransformer(
-                    "avsolatorio/GIST-Embedding-v0", revision=None
-                )
+        else:
+            print("Warning::please choose `small`, `medium`, or `large`")
+            print("Warning::choosing default model: small")
+            self.model = SentenceTransformer(
+                "avsolatorio/GIST-small-Embedding-v0", revision=None
+            )
 
-            elif embedding_model == "lg":
-                EmbedddingBaseModel._model = SentenceTransformer(
-                    "avsolatorio/GIST-large-Embedding-v0", revision=None
-                )
-
-            else:
-                print("Warning::please choose `small`, `medium`, or `large`")
-                print("Warning::choosing default model: small")
-                EmbedddingBaseModel._model = SentenceTransformer(
-                    "avsolatorio/GIST-small-Embedding-v0", revision=None
-                )
-
-        self.model = EmbedddingBaseModel._model
+    def embedding(self, sentence: str) -> list:
+        embeddings = self.model.encode([sentence], convert_to_tensor=True)
+        return embeddings

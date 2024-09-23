@@ -35,7 +35,11 @@ class Inference(FocusWord, GeneratePair):
         """
         super().__init__(spacy_model)
         self.score = Score()
-        self.embedding_model = EmbeddingModel(embedding_model)
+        if isinstance(embedding_model, str):
+            self.embedding_model = EmbeddingModel(embedding_model)
+        else:
+            self.embedding_model = embedding_model
+
         self.therhold_value = therhold_value
 
     def _get_label_and_type(self, focus_words: FocusWordDataType, word: str) -> tuple:

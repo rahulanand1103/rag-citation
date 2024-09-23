@@ -4,8 +4,8 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
-from rag_citation.cite_item import CiteItem
-from rag_citation import Inference
+from rag_citation import CiteItem, Inference
+
 
 documents = [
     "Elon Musk Elon MuskCEO, Tesla$221.6B$439M (0.20%)Real Time Net Worthas of 8/6/24Reflects change since 5 pm ET of prior trading day. 1 in the world todayPhoto by Martin Schoeller for ForbesAbout Elon MuskElon Musk cofounded six companies, including electric car maker Tesla, rocket producer SpaceX and tunneling startup Boring Company.He owns about 12% of Tesla excluding options, but has pledged more than half his shares as collateral for personal loans of up to $3.5 billion.In early 2024, a Delaware judge voided Musk's 2018 deal to receive options equaling an additional 9% of Tesla. Forbes has discounted the options by 50% pending Musk's appeal.SpaceX, founded in 2002, is worth nearly $180 billion after a December 2023 tender offer of up to $750 million; SpaceX stock has quintupled its value in four years.Musk bought Twitter in 2022 for $44 billion, after later trying to back out of the deal. He owns an estimated 74% of the company, now called X.Forbes estimates that Musk's stake in X is now worth nearly 70% less than he paid for it based on investor Fidelity's valuation of the company as of December 2023.Wealth HistoryHOVER TO REVEAL NET WORTH BY YEARForbes ListsThe Richest Person In Every State (2024) 2Billionaires (2024) 1Forbes 400 (2023) 1Innovative Leaders (2019) 25Powerful People (2018) 12Richest In Tech (2017)Global Game Changers (2016)More ListsPersonal StatsAge53Source of WealthTesla, SpaceX, Self MadeSelf-Made Score8Philanthropy Score1ResidenceAustin, TexasCitizenshipUnited StatesMarital StatusSingleChildren11EducationBachelor of Arts/Science, University of PennsylvaniaDid you knowMusk, who says he's worried about population collapse, has ten children with three women, including triplets and two sets of twins.As a kid in South Africa, Musk taught himself to code; he sold his first game, Blastar, for about $500.In Their Own WordsI operate on the physics approach to analysis. You boil things down to the first principles or fundamental truths in a",
@@ -37,10 +37,44 @@ for document in documents:
             ],
         }
     )
+from rag_citation.base_model import BaseEmbeddingModel
+from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer, AutoModel
+import torch.nn.functional as F
+from torch import Tensor
+
+
+class CustomEmbeddingModel(BaseEmbeddingModel):
+    def __init__(self):
+        self.tokenizer = AutoTokenizer.from_pretrained("intfloat/multilingual-e5-small")
+        self.model = AutoModel.from_pretrained("intfloat/multilingual-e5-small")
+
+    def average_pool(
+        self, last_hidden_states: Tensor, attention_mask: Tensor
+    ) -> Tensor:
+        last_hidden = last_hidden_states.masked_fill(
+            ~attention_mask[..., None].bool(), 0.0
+        )
+        return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
+
+    def embedding(self, sentence: str):
+        query = f"query: {sentence}"
+        batch_dict = self.tokenizer(
+            query, max_length=512, padding=True, truncation=True, return_tensors="pt"
+        )
+
+        outputs = self.model(**batch_dict)
+        embeddings = self.average_pool(
+            outputs.last_hidden_state, batch_dict["attention_mask"]
+        )
+
+        # normalize embeddings
+        embeddings = F.normalize(embeddings, p=2, dim=1)
+        return embeddings
 
 
 cite_item = CiteItem(answer=answer, context=context)
-inference = Inference(spacy_model="lg", embedding_model="md")
+inference = Inference(spacy_model="lg", embedding_model=CustomEmbeddingModel())
 print("------ START --------")
 output = inference(cite_item)
 

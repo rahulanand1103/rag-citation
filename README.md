@@ -16,6 +16,7 @@ RAG Citation is an project that combines Retrieval-Augmented Generation (RAG) wi
 ## Quickstart
 * <b>Langchain example</b>: [langchain.ipynb](https://github.com/rahulanand1103/rag-citation/blob/main/docs/examples/3.example-langchain.ipynb)
 * <b>Embeddchain example</b>: [embeddchain.ipynb](https://github.com/rahulanand1103/rag-citation/blob/main/docs/examples/2.example-embeddchain.ipynb)
+* <b>custom embedding model</b>: [custom_embedding_model.ipynb](https://github.com/rahulanand1103/rag-citation/blob/main/docs/examples/4.example-custom_embedding_model.ipynb)
 
 To get started with `rag-citation`, install it using pip:
 

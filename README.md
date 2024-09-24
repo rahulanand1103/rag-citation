@@ -168,7 +168,7 @@ The `Inference` class can be configured with different models and settings:
   Install SentenceTransformers with: `pip install -U sentence-transformers`  
   You can explore the models on [Hugging Face](https://huggingface.co/avsolatorio/GIST-Embedding-v0).
 
-- **`threshold`:** The similarity threshold value for semantic matching (current default: `0.88`). You can adjust this value as needed.
+- **`therhold_value`:** The similarity threshold value for semantic matching (current default: `0.88`). You can adjust this value as needed.
 
 
 ## Contributing

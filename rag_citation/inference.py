@@ -7,7 +7,6 @@ from rag_citation.pair import GeneratePair
 from typing import List, Dict
 from tqdm import tqdm
 
-from rag_citation.embedding import EmbeddingModel
 from rag_citation.score import Score
 from rag_citation.schema import RagCitationOutput
 

@@ -9,6 +9,7 @@ from tqdm import tqdm
 
 from rag_citation.score import Score
 from rag_citation.schema import RagCitationOutput
+from rag_citation.base_model.base import BaseEmbeddingModel
 
 
 class Inference(FocusWord, GeneratePair):

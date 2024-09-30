@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 from rag_citation.base_model.base import BaseEmbeddingModel
 
 
-class EmbedddingBaseModel(BaseEmbeddingModel):
+class EmbeddingModel(BaseEmbeddingModel):
     """
     Base class for embedding models.
 

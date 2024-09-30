@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 # "backports.tarfile==1.2.0",
 setup(
     name="rag_citation",
-    version="0.0.3",
+    version="0.0.4",
     author="rahul anand",
     author_email="rahulanand1103@gmail.com",
     packages=find_packages(),

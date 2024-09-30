@@ -6,11 +6,11 @@ help:  ## Show this help.
 build:  ## Build the package.
 	@python setup.py sdist bdist_wheel
 
-install:
-	@pip install dist/rag_citation-0.0.1-py3-none-any.whl --force-reinstall
+install:  ## Install the package.
+	@pip install dist/rag_citation-0.0.3-py3-none-any.whl --force-reinstall
 
 clean:  ## Clean up build artifacts.
 	@rm -rf dist/ build/ *.egg-info
 
-upload:  ## Clean up build artifacts.
+upload:  
 	@twine upload dist/*

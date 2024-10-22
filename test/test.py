@@ -1,8 +1,9 @@
 import sys
 from pathlib import Path
 
+# Get the root of the project (2 levels up from the test.py file)
 project_root = Path(__file__).resolve().parent.parent
-sys.path.append(str(project_root))
+sys.path.insert(0, str(project_root)) 
 
 from rag_citation.cite_item import CiteItem
 from rag_citation import Inference
@@ -40,7 +41,7 @@ for document in documents:
 
 
 cite_item = CiteItem(answer=answer, context=context)
-inference = Inference(spacy_model="lg", embedding_model="md")
+inference = Inference(spacy_model="sm", embedding_model="md")
 print("------ START --------")
 output = inference(cite_item)
 

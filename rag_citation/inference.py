@@ -155,6 +155,7 @@ class Inference(FocusWord, GeneratePair):
                     if data["score"] > max_score:
                         max_score = data["score"]
                         selected_json_id = key
+                        data["score"] = 100
                         selected_json_data = data
             if selected_json_id and selected_json_data:
                 word_label = []
@@ -228,6 +229,7 @@ class Inference(FocusWord, GeneratePair):
             answer = value["answer_sentences"]
             document = value["document_sentences"]
             source_id = value["source_id"]
+            score = value["score"]
             label = value["label"]
 
             if answer in combined_results:
@@ -235,6 +237,7 @@ class Inference(FocusWord, GeneratePair):
                     {
                         "document": document,
                         "source_id": source_id,
+                        "score": score,
                         "entity": label,
                         "meta": self._get_meta(cite_item, source_id),
                     }
@@ -247,6 +250,7 @@ class Inference(FocusWord, GeneratePair):
                             "document": document,
                             "source_id": source_id,
                             "entity": label,
+                            "score": score,
                             "meta": self._get_meta(cite_item, source_id),
                         }
                     ],

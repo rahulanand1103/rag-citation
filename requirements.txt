@@ -1,2 +1,6 @@
 spacy==3.7.5
 sentence_transformers==3.0.1
+
+# Optional: required for LLM-based citations (pip install rag-citation[llm])
+litellm>=1.40.0
+pydantic>=2.0.0
